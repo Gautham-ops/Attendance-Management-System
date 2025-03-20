@@ -1,0 +1,65 @@
+{% extends 'attendance/index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Delete Student</h2>
+    
+    <p class="warning-text">
+        Are you sure you want to delete <strong>{{ student.name }}</strong> (Roll Number: {{ student.roll_number }})?
+    </p>
+    
+    <form method="POST" class="delete-form">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">Yes, Delete</button>
+        <a href="{% url 'view_students' %}" class="cancel-btn">Cancel</a>
+    </form>
+</div>
+
+<style>
+    .container {
+        width: 50%;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #dc3545;
+    }
+    .warning-text {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .delete-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+    .cancel-btn {
+        text-decoration: none;
+        background-color: #6c757d;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+    .cancel-btn:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+{% endblock %}

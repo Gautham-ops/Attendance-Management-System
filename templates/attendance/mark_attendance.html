@@ -1,0 +1,94 @@
+{% extends 'attendance/index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Mark Attendance</h2>
+
+    <form method="POST" class="attendance-form">
+        {% csrf_token %}
+        
+        <label for="attendance_date">Attendance Date:</label>
+        <input type="date" id="attendance_date" name="attendance_date" value="{{ today|date:'Y-m-d' }}" required>
+
+        <label for="roll_number">Student:</label>
+        <select id="roll_number" name="roll_number" required>
+            {% for student in students %}
+                <option value="{{ student.roll_number }}">{{ student.name }} ({{ student.roll_number }})</option>
+            {% endfor %}
+        </select>
+
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+        </select>
+
+        <button type="submit" class="submit-btn">Mark Attendance</button>
+    </form>
+
+    <div class="link-container">
+        <a href="{% url 'daily_attendance' %}" class="view-btn">View Daily Attendance</a> |
+        <a href="{% url 'monthly_attendance' %}" class="view-btn">View Monthly Attendance</a>
+    </div>
+</div>
+
+<style>
+    .container {
+        width: 50%;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #333;
+    }
+    .attendance-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .attendance-form label {
+        font-weight: bold;
+        text-align: left;
+    }
+    .attendance-form input,
+    .attendance-form select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .submit-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .submit-btn:hover {
+        background-color: #0056b3;
+    }
+    .link-container {
+        margin-top: 20px;
+    }
+    .view-btn {
+        text-decoration: none;
+        background-color: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+    .view-btn:hover {
+        background-color: #218838;
+    }
+</style>
+
+{% endblock %}

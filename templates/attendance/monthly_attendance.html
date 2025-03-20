@@ -1,0 +1,109 @@
+{% extends 'attendance/index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Monthly Attendance</h2>
+
+    <form method="GET" class="month-form">
+        <label for="month">Select Month:</label>
+        <input type="month" id="month" name="month" value="{{ year }}-{{ month|date:'m' }}">
+        <button type="submit" class="view-btn">View</button>
+    </form>
+
+    <div class="attendance-section">
+        <h3>Present Students</h3>
+        <ul class="present-list">
+            {% for student in present_students %}
+                <li>{{ student }}</li>
+            {% empty %}
+                <li class="no-data">No students were present.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="attendance-section">
+        <h3>Absent Students</h3>
+        <ul class="absent-list">
+            {% for student in absent_students %}
+                <li>{{ student }}</li>
+            {% empty %}
+                <li class="no-data">No students were absent.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="back-link">
+        <a href="{% url 'mark_attendance' %}" class="back-btn">Back to Mark Attendance</a>
+    </div>
+</div>
+
+<style>
+    .container {
+        width: 60%;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #333;
+    }
+    .month-form {
+        margin-bottom: 20px;
+    }
+    .month-form input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .view-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .view-btn:hover {
+        background-color: #0056b3;
+    }
+    .attendance-section {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    h3 {
+        color: #007bff;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    ul li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .no-data {
+        font-style: italic;
+        color: #888;
+    }
+    .back-link {
+        margin-top: 20px;
+    }
+    .back-btn {
+        text-decoration: none;
+        background-color: #28a745;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+    .back-btn:hover {
+        background-color: #218838;
+    }
+</style>
+
+{% endblock %}
+

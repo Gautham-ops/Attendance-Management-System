@@ -1,0 +1,75 @@
+{% extends 'attendance/index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Add Student</h2>
+
+    <form method="POST" class="student-form">
+        {% csrf_token %}
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="roll_number">Roll Number:</label>
+        <input type="text" id="roll_number" name="roll_number" required>
+
+        <button type="submit" class="submit-btn">Add Student</button>
+    </form>
+
+    <div class="link-container">
+        <a href="{% url 'mark_attendance' %}" class="attendance-btn">Mark Attendance</a>
+    </div>
+</div>
+
+<style>
+    .container {
+        width: 50%;
+        margin: auto;
+        text-align: center;
+    }
+    .student-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+        background: #f4f4f4;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .student-form label {
+        font-weight: bold;
+        text-align: left;
+    }
+    .student-form input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .submit-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .submit-btn:hover {
+        background-color: #218838;
+    }
+    .link-container {
+        margin-top: 20px;
+    }
+    .attendance-btn {
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+    .attendance-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

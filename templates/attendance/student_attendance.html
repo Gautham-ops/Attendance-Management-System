@@ -1,0 +1,82 @@
+{% extends 'attendance/index.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Monthly Attendance for {{ student.name }}</h2>
+
+    <ul class="attendance-list">
+        {% for record in attendance_records %}
+            <li>{{ record.date }} - <span class="{% if record.status == 'Present' %}present{% else %}absent{% endif %}">
+                {{ record.status }}
+            </span></li>
+        {% empty %}
+            <li class="no-data">No records found</li>
+        {% endfor %}
+    </ul>
+
+    <div class="back-link">
+        <a href="{% url 'daily_attendance' %}" class="back-btn">Back to Daily Attendance</a>
+    </div>
+</div>
+
+<style>
+    .container {
+        width: 50%;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+    .attendance-list {
+        list-style-type: none;
+        padding: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+    }
+    .attendance-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        font-size: 16px;
+    }
+    .attendance-list li:last-child {
+        border-bottom: none;
+    }
+    .present {
+        color: green;
+        font-weight: bold;
+    }
+    .absent {
+        color: red;
+        font-weight: bold;
+    }
+    .no-data {
+        font-style: italic;
+        color: #888;
+    }
+    .back-link {
+        margin-top: 20px;
+    }
+    .back-btn {
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+    .back-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}
+
+
