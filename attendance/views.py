@@ -48,26 +48,41 @@ def student_attendance(request, roll_number):
 
 def monthly_attendance(request):
     students = Students.objects.all()
-      # Get month and year from request safely
-    month = request.GET.get('month', '').strip()  # Remove any accidental spaces
-    year = request.GET.get('year', '').strip()
 
-    # Use current month/year if the request parameters are empty
-    month = int(month) if month.isdigit() else datetime.today().month
-    year = int(year) if year.isdigit() else datetime.today().year
-    
-    # Get first and last day of the month
-    first_day = datetime(year, month, 1)
-    last_day = datetime(year, month, monthrange(year, month)[1])  # Correct last day of the month
-    
-    attendance_records = Attendance.objects.filter(date__range=[first_day, last_day])
+    month = request.GET.get('month', '').strip()  # Remove any accidental spaces
+ 
+    try:
+        date_obj = datetime.strptime(month, '%Y-%m')
+        month = date_obj.month
+        year = date_obj.year
+    except ValueError:
+        # If parsing fails, use current month and year
+        current_date = datetime.today()
+        month = current_date.month
+        year = current_date.year
+
+
+    print("--------------------------------")
+    print(month,year)
+    print("--------------------------------")
+
+    attendance_records = Attendance.objects.filter(
+        date__month=month,
+        date__year=year
+    )
+
+
+    for record in attendance_records:
+        print(record.date)
+        print(record.student.name,record.status)
+        print("--------------------------------")
 
 
     present_students = {record.student.name for record in attendance_records if record.status == 'Present'}
     absent_students = {record.student.name for record in attendance_records if record.status == 'Absent'}
 
     return render(request, 'attendance/monthly_attendance.html', {
-        'month': month,
+        'month':month,
         'year': year,
         'present_students': present_students,
         'absent_students': absent_students,
